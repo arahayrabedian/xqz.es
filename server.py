@@ -58,6 +58,7 @@ class Excuse(AlchemyBase):
             func.random()
         ).first()
 
+
 @post('/xqz-moi')
 def make_an_excuse(db):
     try:
