@@ -36,21 +36,6 @@ plugin = sqlalchemy.Plugin(
 # set up the bottle app
 install(plugin)
 
-EXCUSES = [
-    "I went to return the rental!",
-    "Unfortunately, I already set up an appointment with my instructor",
-    "I didn't hang my laundry last night",
-    "I was hungry",
-    "I overslept",
-    "I forgot",
-    "I'm going for a beer",
-    "My phone was on silent",
-    "I just did my hair",
-    "I slept funny",
-    "My back hurts",
-    "friggin neighbor has the stereo on all night",
-]
-
 
 class Excuse(AlchemyBase):
 
@@ -67,28 +52,31 @@ class Excuse(AlchemyBase):
 
     @classmethod
     def get_random_excuse(cls, db):
-        return db.query(cls).order_by(func.random()).first()
-
+        return db.query(cls).filter(
+            cls.published == True
+        ).order_by(
+            func.random()
+        ).first()
 
 @post('/xqz-moi')
 def make_an_excuse(db):
     try:
-        excuse = Excuse.get_random_excuse(db).excuse
+        excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
         raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
     return {
         "response_type": "in_channel",
-        "text": excuse.excuse,
+        "text": excuse_text,
     }
 
 
 @route('/')
 def hello(db):
     try:
-        excuse = Excuse.get_random_excuse(db).excuse
+        excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
         raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
-    html = "<center><H1>%s</H1></center>" % excuse.excuse
+    html = "<center><H1>%s</H1></center>" % excuse_text
     return html
 
 
