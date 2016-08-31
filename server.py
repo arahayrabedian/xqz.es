@@ -2,6 +2,7 @@ import os
 
 from bottle import install
 from bottle import post
+from bottle import request
 from bottle import route
 from bottle import run
 from bottle.ext import sqlalchemy
@@ -15,6 +16,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
+
+from response import HTTPSlackResponse
+from plugins.slack_request_processor import slack_data_extractor
 
 # set up sqlalchemy
 AlchemyBase = declarative_base()
@@ -35,6 +39,7 @@ plugin = sqlalchemy.Plugin(
 
 # set up the bottle app
 install(plugin)
+install(slack_data_extractor)
 
 
 class Excuse(AlchemyBase):
@@ -53,30 +58,50 @@ class Excuse(AlchemyBase):
     @classmethod
     def get_random_excuse(cls, db):
         return db.query(cls).filter(
-            cls.published == True
+            cls.published==True
         ).order_by(
             func.random()
         ).first()
 
 
-@post('/xqz-moi')
-def make_an_excuse(db):
+@post('/slacktion/')
+def process_slack_command(db):
+    """Parse /commands and route them to their appropriate processing methods
+    """
+
+    # match help text
+    if request.slack.text == 'help':
+        return HTTPSlackResponse({
+            "text": "so you want some help do you?"
+        })
+    elif request.slack.text.startswith("add"):
+        # here we want to add a new non-approved excuse
+        pass
+    elif request.slack.user_name == "gus":
+        # just a temporary prank, this block will be removed.
+        return HTTPSlackResponse({
+            "text": "you have no excuse, gus."
+        })
+
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
         raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
-    return {
-        "response_type": "in_channel",
+    return HTTPSlackResponse({
         "text": excuse_text,
-    }
+    })
 
 
 @route('/')
 def hello(db):
+    """Serve up a plaintext public excuse for the purposes of
+    :param db:
+    :return:
+    """
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
-        raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
+        raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty? lol)")
     html = "<center><H1>%s</H1></center>" % excuse_text
     return html
 
