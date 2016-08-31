@@ -74,7 +74,11 @@ def process_slack_command(db):
     # match help text
     if request.slack.text == 'help':
         return {
-            "text": "so you want some help do you?"
+            "text": "Request this help text with `/xqzes help`\n"
+                    "Request an excuse (visible to everyone) with `/xqzes`\n"
+                    "Submit a new excuse to a moderator with "
+                    "`/xqzes add <your text here>`\n"
+                    "e.g: `/xqzes add I was shopping!`"
         }
     elif request.slack.text.startswith("add"):
         # here we want to add a new non-approved excuse
