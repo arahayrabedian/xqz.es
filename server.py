@@ -48,8 +48,11 @@ class Excuse(AlchemyBase):
     id = Column(Integer, primary_key=True)
     excuse = Column(String, nullable=False)
     published = Column(Boolean, nullable=False, default=False)
+    username = Column(String, nullable=False, default="admin")
+    team_id = Column(String, nullable=True, default=None)
 
-    def __init__(self, excuse):
+    def __init__(self, username, excuse):
+        self.username = username
         self.excuse = excuse
 
     def __repr__(self):
@@ -71,17 +74,25 @@ def process_slack_command(db):
 
     # match help text
     if request.slack.text == 'help':
-        return HTTPSlackResponse({
+        return {
             "text": "so you want some help do you?"
-        })
+        }
     elif request.slack.text.startswith("add"):
         # here we want to add a new non-approved excuse
-        pass
-    elif request.slack.user_name == "gus":
-        # just a temporary prank, this block will be removed.
-        return HTTPSlackResponse({
-            "text": "you have no excuse, gus."
-        })
+        excuse_text = request.slack.text.lstrip(" add ")
+        if len(excuse_text) > 140:
+            return {
+                'text': "We conform to twitter standards (for no particular "
+                        "reason), please keep your excuses shorter than "
+                        "140 characters"
+            }
+        excuse = Excuse(request.slack.user_name, excuse_text)
+        excuse.team_id = request.slack.team_id
+        db.add(excuse)
+        return {
+            'text': "Your excuse has been added to the moderation queue. This "
+                    "can take anywhere from a few minutes to a few years"
+        }
 
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse

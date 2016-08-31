@@ -13,7 +13,7 @@ def load_excuses():
     db_session = create_session()
     with open("fixtures/excuses.txt", 'r') as file:
         for line in file:
-            excuse = Excuse(line.rstrip("\n"))
+            excuse = Excuse("admin", line.rstrip("\n"))
             excuse.published = True
             db_session.add(excuse)
     db_session.commit()
