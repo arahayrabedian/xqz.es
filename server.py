@@ -17,7 +17,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
-from response import HTTPSlackResponse
 from plugins.slack_request_processor import slack_data_extractor
 
 # set up sqlalchemy
@@ -98,9 +97,10 @@ def process_slack_command(db):
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
         raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
-    return HTTPSlackResponse({
+    return {
+        "response_type": "in_channel",
         "text": excuse_text,
-    })
+    }
 
 
 @route('/')
