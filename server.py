@@ -1,4 +1,4 @@
-import os
+#!/usr/bin/env python
 
 from bottle import install
 from bottle import post
@@ -6,6 +6,7 @@ from bottle import request
 from bottle import route
 from bottle import run
 from bottle.ext import sqlalchemy
+from bottle import template
 from bottle import HTTPError
 
 from sqlalchemy import Boolean
@@ -19,11 +20,12 @@ from sqlalchemy.sql import func
 
 from plugins.slack_request_processor import slack_data_extractor
 
+import settings
+
 # set up sqlalchemy
 AlchemyBase = declarative_base()
-db_url = os.getenv("XQZMOI_DATABASE_CONNECTION_STRING",
-                   "sqlite:///excuses.sqlite")
-engine = create_engine(db_url, echo=True)
+
+engine = create_engine(settings.DATABASE_CONNECTION_STRING, echo=True)
 create_session = sessionmaker(bind=engine)
 
 # set up the sqlalchemy plugin
@@ -100,7 +102,7 @@ def process_slack_command(db):
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
-        raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty lol)")
+        raise HTTPError(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
     return {
         "response_type": "in_channel",
         "text": excuse_text,
@@ -116,9 +118,14 @@ def hello(db):
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
-        raise HTTPError(404, "NO EXCUSE FOR YOU (our db is empty? lol)")
-    html = "<center><H1>%s</H1></center>" % excuse_text
-    return html
+        raise HTTPError(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
+
+    return template(
+        'templates/home',
+        excuse_text=excuse_text,
+        slack_client_id=settings.SLACK_OAUTH['client_id'],
+        slack_command_scope=settings.SLACK_OAUTH['command_scope']
+    )
 
 
 if __name__ == '__main__':
