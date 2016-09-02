@@ -3,9 +3,7 @@
 ## About
 I started xqzes as a side project to allow users on
 slack to randomly insert excuses in to their chats.
-
 It selects an excuse randomly from a backing database.
-
 As a side-feature, it can present the same excuses in HTML.
 
 ## Usage
