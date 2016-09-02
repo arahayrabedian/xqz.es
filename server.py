@@ -125,7 +125,7 @@ def hello(db):
         abort(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
 
     return template(
-        'templates/home',
+        'home',
         excuse_text=excuse_text,
         slack_client_id=settings.SLACK_OAUTH['client_id'],
         slack_command_scope=settings.SLACK_OAUTH['command_scope'],
