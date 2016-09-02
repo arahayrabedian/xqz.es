@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+from distutils.util import strtobool
+
+from bottle import abort
 from bottle import install
 from bottle import post
 from bottle import request
@@ -7,7 +10,6 @@ from bottle import route
 from bottle import run
 from bottle.ext import sqlalchemy
 from bottle import template
-from bottle import HTTPError
 
 from sqlalchemy import Boolean
 from sqlalchemy import Column
@@ -21,6 +23,10 @@ from sqlalchemy.sql import func
 from plugins.slack_request_processor import slack_data_extractor
 
 import settings
+
+from oauth2.views import callback
+
+route('/oauth2/callback/', 'GET', callback)
 
 # set up sqlalchemy
 AlchemyBase = declarative_base()
@@ -102,7 +108,7 @@ def process_slack_command(db):
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
-        raise HTTPError(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
+        abort(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
     return {
         "response_type": "in_channel",
         "text": excuse_text,
@@ -112,19 +118,18 @@ def process_slack_command(db):
 @route('/')
 def hello(db):
     """Serve up a plaintext public excuse for the purposes of
-    :param db:
-    :return:
     """
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
     except AttributeError:
-        raise HTTPError(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
+        abort(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
 
     return template(
         'templates/home',
         excuse_text=excuse_text,
         slack_client_id=settings.SLACK_OAUTH['client_id'],
-        slack_command_scope=settings.SLACK_OAUTH['command_scope']
+        slack_command_scope=settings.SLACK_OAUTH['command_scope'],
+        slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
     )
 
 
