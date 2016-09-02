@@ -1,6 +1,6 @@
 import os
 
-from bottle import TEMPLATE_PATH
+from bottle import TEMPLATE_PATH as BOTTLE_TEMPLATE_PATH
 
 
 DATABASE_CONNECTION_STRING = os.getenv("XQZES_DATABASE_CONNECTION_STRING",
@@ -14,5 +14,5 @@ SLACK_OAUTH = {
 }
 
 #  modify template path for production
-_TEMPLATE_PATH = os.getenv('XQZES_BOTTLE_TEMPLATE_PATH', './templates/')
-TEMPLATE_PATH.insert(0, _TEMPLATE_PATH)
+TEMPLATE_PATH = os.getenv('XQZES_BOTTLE_TEMPLATE_PATH', './templates/')
+BOTTLE_TEMPLATE_PATH.insert(0, TEMPLATE_PATH)

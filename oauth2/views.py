@@ -28,6 +28,7 @@ def callback():
     oauth2session = OAuth2Session(settings.SLACK_OAUTH['client_id'],
                                   state=request.GET['state'])
 
+    #PII - update privacy policy if oauth2 token is stored.
     token = oauth2session.fetch_token(
         settings.SLACK_OAUTH['token_url'],
         client_secret=settings.SLACK_OAUTH['client_secret'],

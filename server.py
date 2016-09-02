@@ -8,6 +8,7 @@ from bottle import post
 from bottle import request
 from bottle import route
 from bottle import run
+from bottle import static_file
 from bottle.ext import sqlalchemy
 from bottle import template
 
@@ -78,7 +79,6 @@ class Excuse(AlchemyBase):
 def process_slack_command(db):
     """Parse /commands and route them to their appropriate processing methods
     """
-
     # match help text
     if request.slack.text == 'help':
         return {
@@ -131,6 +131,11 @@ def hello(db):
         slack_command_scope=settings.SLACK_OAUTH['command_scope'],
         slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
     )
+
+
+@route('/privacy/')
+def privacy_policy(db):
+    return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
 
 
 if __name__ == '__main__':
