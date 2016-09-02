@@ -78,7 +78,6 @@ class Excuse(AlchemyBase):
 def process_slack_command(db):
     """Parse /commands and route them to their appropriate processing methods
     """
-
     # match help text
     if request.slack.text == 'help':
         return {
@@ -130,6 +129,12 @@ def hello(db):
         slack_client_id=settings.SLACK_OAUTH['client_id'],
         slack_command_scope=settings.SLACK_OAUTH['command_scope'],
         slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
+    )
+
+@route('/privacy/')
+def privacy_policy(db):
+    return template(
+        'privacy_policy'
     )
 
 

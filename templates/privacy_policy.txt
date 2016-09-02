@@ -1,0 +1,32 @@
+xqz.es Privacy Policy
+
+
+Information Collection, Use, and Sharing
+----------------------------------------
+Data collected for usage within the xqz.es web application is only data provided by Slack's API upon installation of the xqz.es Slack application and/or invocation of the slash commands it provides. Any data you provide by communicating with the developer(s) or opening issues on github are not to be used for anything other than to respond to the support request or github issue.
+
+We will use as little information as reasonably possible in order to run the features of the web application (except where we need additional information in preparation for upcoming features). We will not share your information with any third party outside of our organization, other than third party statistics and performance monitoring tools.
+
+
+Security
+--------
+We take precautions to protect your information to the best of our knowledge and abilities. We operate over https only in order to abide by best practices as well as to comply with Slack API access requirements.
+
+
+Personally Identfiable Information (PII)
+----------------------------------------
+A best-effort list of the personally identifiable information we store, up to date as of 2016/10/02:
+
+  - Slack OAuth tokens are transmitted to our system but are not permanently stored as we do not need access to protected resources provided by Slack
+  - When you make a request to add an excuse via the Slack application command `/xqzes add <text>` we store your Slack username and team id along with the excuse, while currently only written and never read, this is in order to prevent abuse and to prepare for a future feature for team-based or team-only excuses. Other data transmitted by Slack as part of that request is, currently, ignored.
+  - Some of the data outlined above may be transmitted to New Relic as part of it's system performance data collection routines.
+
+
+Access by System Administrators
+-------------------------------
+System administrators routinely access backing stores/databases as part of the operations of xqz.es, where they will come across data outlined above. Administrators are expected not to disclose personally identifiable information that they come across in this database for any purpose other than for the operation and maintenance of the website. Aggregated, non-identifiable data may be released publicly.
+
+
+Updates
+-------
+Our Privacy Policy may change from time to time and all updates will be posted on this page.
