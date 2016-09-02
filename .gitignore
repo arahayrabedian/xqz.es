@@ -90,3 +90,9 @@ ENV/
 
 # Sqlite databases unwelcome
 *.sqlite
+*.sqlite3
+*.db
+
+# dev env files not welcome
+.env.sh
+
