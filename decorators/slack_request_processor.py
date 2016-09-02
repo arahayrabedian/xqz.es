@@ -6,9 +6,16 @@ import settings
 
 def slack_verification_preprocessor(view):
     """
-    Reduce boilerplate dict extraction in the code by extracting slack POST
-    form data in to a nice little wrapping object that we can retrieve from:
-    e.g: request.forms['text'] --> request.slack.text
+    Run some preliminary authentication - by Slack policy (and, given team
+    privacy considerations), we need to ensure that requests legitimately
+    come from slack. There is an assigned (secret) shared token that we need to
+    compare from our side to the incoming request.
+
+    we need to:
+    1) ensure it is present (first assertion)
+    2) ensure it matches (second assertion)
+
+    if these two succeed, then we can allow the view to be called.
     """
     def wrapper(db, *args, **kwargs):
         try:
