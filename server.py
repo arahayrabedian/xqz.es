@@ -21,11 +21,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
-from plugins.slack_request_processor import slack_data_extractor
-
 import settings
 
+from decorators.slack_request_processor import slack_verification_preprocessor
 from oauth2.views import callback
+from util import DictObject
 
 route('/oauth2/callback/', 'GET', callback)
 
@@ -36,7 +36,7 @@ engine = create_engine(settings.DATABASE_CONNECTION_STRING, echo=True)
 create_session = sessionmaker(bind=engine)
 
 # set up the sqlalchemy plugin
-plugin = sqlalchemy.Plugin(
+sqlalchemy_plugin = sqlalchemy.Plugin(
         engine,
         AlchemyBase.metadata,
         keyword='db',
@@ -46,8 +46,7 @@ plugin = sqlalchemy.Plugin(
 )
 
 # set up the bottle app
-install(plugin)
-install(slack_data_extractor)
+install(sqlalchemy_plugin)
 
 
 class Excuse(AlchemyBase):
@@ -76,11 +75,16 @@ class Excuse(AlchemyBase):
 
 
 @post('/slacktion/')
+@slack_verification_preprocessor
 def process_slack_command(db):
     """Parse /commands and route them to their appropriate processing methods
     """
+
+    # make our lives a little easier
+    slack_data = DictObject(request.forms)
+
     # match help text
-    if request.slack.text == 'help':
+    if slack_data.text == 'help':
         return {
             "text": "Request this help text with `/xqzes help`\n"
                     "Request an excuse (visible to everyone) with `/xqzes`\n"
@@ -88,17 +92,17 @@ def process_slack_command(db):
                     "`/xqzes add <your text here>`\n"
                     "e.g: `/xqzes add I was shopping!`"
         }
-    elif request.slack.text.startswith("add"):
+    elif slack_data.text.startswith("add"):
         # here we want to add a new non-approved excuse
-        excuse_text = request.slack.text.lstrip(" add ")
+        excuse_text = slack_data.text.lstrip(" add ")
         if len(excuse_text) > 140:
             return {
                 'text': "We conform to twitter standards (for no particular "
                         "reason), please keep your excuses shorter than "
                         "140 characters"
             }
-        excuse = Excuse(request.slack.user_name, excuse_text)
-        excuse.team_id = request.slack.team_id
+        excuse = Excuse(slack_data.user_name, excuse_text)
+        excuse.team_id = slack_data.team_id
         db.add(excuse)
         return {
             'text': "Your excuse has been added to the moderation queue. This "
