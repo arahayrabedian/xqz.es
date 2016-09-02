@@ -8,6 +8,7 @@ from bottle import post
 from bottle import request
 from bottle import route
 from bottle import run
+from bottle import static_file
 from bottle.ext import sqlalchemy
 from bottle import template
 
@@ -131,11 +132,10 @@ def hello(db):
         slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
     )
 
+
 @route('/privacy/')
 def privacy_policy(db):
-    return template(
-        'privacy_policy'
-    )
+    return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
 
 
 if __name__ == '__main__':
