@@ -24,10 +24,12 @@ from sqlalchemy.sql import func
 import settings
 
 from decorators.slack_request_processor import slack_verification_preprocessor
+from contact.views import contact
 from oauth2.views import callback
 from util import DictObject
 
 route('/oauth2/callback/', 'GET', callback)
+route('/contact/', ['GET', 'POST'], contact)
 
 # set up sqlalchemy
 AlchemyBase = declarative_base()
