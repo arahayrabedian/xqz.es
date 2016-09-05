@@ -7,7 +7,7 @@
 </style>
 
 <center>
-<img src="/static/logo/xqzes_2000x500.png" alt="xqzes logo" style="width:30em;">
+<img src="/static/logo/xqzes_2000x500.png" alt="xqzes logo" style="width:22em;">
 </center>
 
 <center>
