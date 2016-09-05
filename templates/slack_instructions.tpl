@@ -5,6 +5,7 @@
 <body>
 
 <H2>How-To Slack</H2>
+<div style="width:50%">
 <p>We think excuses are an important part of your life. Which is why
 we decided to build a slack app.</p>
 
@@ -25,5 +26,6 @@ have any concerns about privacy, you can read our (rather succinct)
 <p>You're always welcome to <a href="/contact/">contact us</a> or
 <a href="https://github.com/arahayrabedian/xqz.es/issues/">open an issue on
  Github</a></p>
+</div>
 </body>
 </html>

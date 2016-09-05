@@ -25,5 +25,6 @@ RECAPTCHA_SITE_KEY = os.getenv('XQZES_RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY = os.getenv('XQZES_RECAPTCHA_SECRET_KEY')
 
 # modify template path for production
+STATIC_PATH = os.getenv('XQZES_BOTTLE_STATIC_PATH', './media/')
 TEMPLATE_PATH = os.getenv('XQZES_BOTTLE_TEMPLATE_PATH', './templates/')
 BOTTLE_TEMPLATE_PATH.insert(0, TEMPLATE_PATH)
