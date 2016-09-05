@@ -71,5 +71,6 @@ it should be as simple as `./server.py`.
  be able to verify that Slack is the sender of the request. Otherwise
  Anybody could make API calls to your API and trigger commands on behalf of
  other teams. Dangerous.
+
 [2] - You may enter dummy data for development purposes, however, the
 Contact Us page will fail to render a Captcha and will not be submittable.
