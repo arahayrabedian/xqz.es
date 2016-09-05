@@ -1,5 +1,6 @@
 <html>
 <head>
+%include common/header
 </head>
 <body>
 <H1>Contact Us</H1>
