@@ -1,56 +1,44 @@
 <html>
-<head>
-%include common/header
-</head>
-<body>
-<H1>Contact Us</H1>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/static/style.css">
+    </head>
 
-<p style="width:50%">
-Use this form to send the developers behind
-xqz.es an email. We prefer
-<a href=https://github.com/arahayrabedian/xqz.es/issues>github issues</a>
-where possible, but are happy to accept praise,
-feature requests, bug reports or reports of
-security flaws below as well.
-</p>
+    <body>
+        %include common/header
 
-%if contacted:
-<p style="width:50%">
-<font color="green">Your feedback is hurtling it's way towards the nearest
-developer's inbox. Please don't resubmit the form again unless you have
-something to add. Thanks.</font>
-</p>
-%end
+        <H1>Contact Us</H1>
 
-<form method="POST" action="/contact/">
+        <p>Use this form to send the developers behind xqz.es an email.<br> We prefer <a href=https://github.com/arahayrabedian/xqz.es/issues>github issues</a> where possible, but are happy to accept praise, feature requests, bug reports or reports of security flaws below as well.</p>
 
-    <p>
-    <div>Your email address</div>
-    <div> {{ !form.email }}</div>
-    %for error in form.email.errors:
-    <font color="red">{{ error }}</font>
-    %end
-    </p>
+        %if contacted:
+            <p class="success">Your feedback is hurtling it's way towards the nearest developer's inbox. Please don't resubmit the form again unless you have something to add. Thanks.</p>
+        %end
 
+        <form id="contact" method="POST" action="/contact/">
+            <div>
+                <label>Your email address</label>
+                {{ !form.email }}
+                %for error in form.email.errors:
+                    <p class="error">{{ error }}</p>
+                %end
+            </div>
 
-    <p>
-    <div>{{ !form.contact_text.label }}</div>
-    <div>{{ !form.contact_text }}</div>
-    %for error in form.contact_text.errors:
-    <font color="red"> {{ error }}</font>
-    %end
-    </p>
+            <div>
+                <label>{{ !form.contact_text.label }}</label>
+                {{ !form.contact_text }}
+                %for error in form.contact_text.errors:
+                    <p class="error"> {{ error }}</p>
+                %end
+            </div>
 
-    <p>
-    <div>{{ !form.recaptcha }}</div>
-    %for error in form.recaptcha.errors:
-    <font color="red"> {{ error }}</font>
-    %end
-    </p>
+            <div>
+                <label>{{ !form.recaptcha }}</label>
+                %for error in form.recaptcha.errors:
+                    <p class="error"> {{ error }}</p>
+                %end
+            </div>
 
-    <p>
-    <div><button type="submit">Contact!</button></div>
-    </p>
-</form>
-</body>
+            <div><button type="submit">Contact!</button></div>
+        </form>
+    </body>
 </html>

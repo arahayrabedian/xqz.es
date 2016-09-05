@@ -1,0 +1,48 @@
+
+body {
+	font: 18px/1.4 "Helvetica Neue", Arial, sans-serif;
+	color: #333;
+	max-width: 600px;
+	margin: 0 auto 100px auto;
+	text-align: center;
+}
+
+a {
+	color: #ED1C43;
+}
+
+#header {}
+#header .logo { margin: 60px 0 10px; }
+
+
+/* Navigation */
+#header ul { list-style: none; padding: 10px; margin: 0; }
+#header ul li {
+	display: inline-block;
+	font-weight: bold;
+	border-radius: 4px;
+}
+#header ul li a { padding: 10px 20px; display: inline-block; }
+#header ul li:hover { background: #fefcf2; cursor: pointer; }
+#header ul li:active { background: #fcf4d1; }
+
+
+/* Contact Form */
+.success { color: green; }
+.error { color: red; }
+
+#contact div { margin-bottom: 30px; }
+#contact label { font-weight: bold; margin-bottom: 10px; display: block; }
+#contact input { width: 100%; padding: 10px; font-size: 18px; }
+#contact textarea { width: 100%; padding: 10px; font-size: 18px; }
+#contact button {
+	font-size: 22px;
+	font-weight: bold;
+	background: #ED1C43;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 2px;
+}
+#contact button:hover { cursor: pointer; background: #d61136 }
+#contact .error { margin-top: 2px; }
