@@ -10,4 +10,5 @@
  <div><a href="/">Home</a></div>
  <div><a href="/contact/">Contact</a></div>
  <div><a href="/privacy/">Privacy</a></div>
+ <div><a href="/acknowledgements/">Acknowledgements</a></div>
 </div>

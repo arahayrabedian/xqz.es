@@ -143,6 +143,10 @@ def hello(db):
 def privacy_policy(db):
     return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
 
+@route('/acknowledgements/')
+def privacy_policy(db):
+    return template('acknowledgements')
+
 
 if __name__ == '__main__':
     run(host='127.0.0.1', port=8088, debug=False)
