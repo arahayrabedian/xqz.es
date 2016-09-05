@@ -144,5 +144,15 @@ def privacy_policy(db):
     return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
 
 
+@route('/slack_instructions/')
+def slack_instructions(db):
+    return template(
+        'slack_instructions',
+        slack_client_id=settings.SLACK_OAUTH['client_id'],
+        slack_command_scope=settings.SLACK_OAUTH['command_scope'],
+        slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
+    )
+
+
 if __name__ == '__main__':
     run(host='127.0.0.1', port=8088, debug=False)
