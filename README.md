@@ -18,7 +18,7 @@ no particular policy and will be dealt with on a case-by-case
 basis. Generally good practice is recommended off of a recent
 version of master.
 
-## Self-hosting
+## Self-Hosting / Development Setup
 ### Installation
 In order to install all the pre-requisites for xqz.es you must run
 `pip install -r requirements.txt` - you will likely have some other
