@@ -32,8 +32,8 @@
             </div>
 
             <div>
-                <label>{{ !form.recaptcha }}</label>
-                %for error in form.recaptcha.errors:
+                <label>{{ !form.nocaptcha }}</label>
+                %for error in form.nocaptcha.errors:
                     <p class="error"> {{ error }}</p>
                 %end
             </div>

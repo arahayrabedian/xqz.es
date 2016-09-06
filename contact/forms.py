@@ -2,7 +2,7 @@ from wtforms import validators
 from wtforms import StringField
 from wtforms import Form
 from wtforms import TextAreaField
-from wtfrecaptcha.fields import RecaptchaField
+from wtfnocaptcha.fields import NoCaptchaField
 
 from settings import RECAPTCHA_SITE_KEY
 from settings import RECAPTCHA_SECRET_KEY
@@ -21,7 +21,7 @@ class ContactForm(Form):
                         "characters"),
         ]
     )
-    recaptcha = RecaptchaField(
+    nocaptcha = NoCaptchaField(
         public_key=RECAPTCHA_SITE_KEY,
         private_key=RECAPTCHA_SECRET_KEY,
         secure=True,

@@ -20,7 +20,7 @@ SLACK_OAUTH = {
     'command_scope': 'commands',
 }
 
-# recaptcha credentials
+# nocaptcha credentials
 RECAPTCHA_SITE_KEY = os.getenv('XQZES_RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY = os.getenv('XQZES_RECAPTCHA_SECRET_KEY')
 
