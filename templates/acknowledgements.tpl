@@ -18,7 +18,7 @@
         the original inspiration.</p>
 
         <p><b>João Pacheco</b> for tossing together an awesome
-        logo at breakneck speeds</p>
+        logo at breakneck speeds.</p>
 
         <p><b><a href="http://kumailht.com">Kumail Hunaid</a></b> for
         helping me out by taking the html from the early 90's to the
