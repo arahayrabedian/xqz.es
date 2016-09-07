@@ -143,9 +143,25 @@ def hello(db):
 def privacy_policy(db):
     return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
 
+
+@route('/slack_instructions/')
+def slack_instructions(db):
+    return template(
+        'slack_instructions',
+        slack_client_id=settings.SLACK_OAUTH['client_id'],
+        slack_command_scope=settings.SLACK_OAUTH['command_scope'],
+        slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
+    )
+
+
 @route('/acknowledgements/')
 def privacy_policy(db):
     return template('acknowledgements')
+
+
+@route('/static/<path:path>')
+def callback(path):
+    return static_file(path, root=settings.STATIC_PATH)
 
 
 if __name__ == '__main__':

@@ -17,7 +17,7 @@ def contact(db):
     Our contact-us form, basically, present a form if it's a GET request,
     validate and process the form if it's a POST request. Filthy but works.
     """
-    form = ContactForm(request.POST, recaptcha={'ip_address': '127.0.0.1'})
+    form = ContactForm(request.POST, nocaptcha={'ip_address': '127.0.0.1'})
     if request.method == 'POST' and form.validate():
         # process the form, captcha is valid.
 
