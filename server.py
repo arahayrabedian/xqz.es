@@ -154,6 +154,11 @@ def slack_instructions(db):
     )
 
 
+@route('/acknowledgements/')
+def privacy_policy(db):
+    return template('acknowledgements')
+
+
 @route('/static/<path:path>')
 def callback(path):
     return static_file(path, root=settings.STATIC_PATH)
