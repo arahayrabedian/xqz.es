@@ -16,8 +16,6 @@
 			pick a random excuse for you. Some other options are available via the
 			 '/xqzes help' command, but these are merely ancillary.</p>
 
-			<p>A final note, some of our excuses <b>are NSFW.</b></p>
-
 			<p>To add xqz.es to your team, all you need to do is click the slack button
 			on the home page (or below) and follow the instructions slack gives you. If you
 			have any concerns about privacy, you can read our (rather succinct) <a href=/privacy/>privacy policy</a>.</p>
