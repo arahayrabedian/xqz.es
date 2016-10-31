@@ -7,6 +7,10 @@
 
 	<H1>{{excuse_text}}</H1>
 
+	<p>
+	<H5><a href="/">ANOTHER!</a></H5>
+	</p>
+
 	%if slack_installed:
 		<H5>You seem to have successfully installed xqz.es for slack, <a href=https://slack.com/apps/manage>manage your apps</a> to approve it if necessary</H5>
 	%else:
