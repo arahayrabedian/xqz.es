@@ -21,6 +21,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
+from wtforms import Form
+from wtforms import validators
+from wtforms.fields import StringField
+from wtforms.fields import TextAreaField
+from wtfnocaptcha.fields import NoCaptchaField
+
 import settings
 
 from decorators.slack_request_processor import slack_verification_preprocessor
@@ -152,6 +158,41 @@ def slack_instructions(db):
         slack_command_scope=settings.SLACK_OAUTH['command_scope'],
         slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
     )
+
+
+@route('/submit/')
+def submit(db):
+
+    # TODO: break this out along with others in to an excuses package.
+    class SubmissionForm(Form):
+        attribution_name = StringField('Your Name (For Attribution purposes)',
+                                       [validators.InputRequired()])
+        excuse = TextAreaField(
+            'What\'s YOUR excuse??',
+            [
+                validators.Length(
+                    min=5,
+                    max=140,
+                    message="Please provide %(min)d - %(max)d "
+                            "characters"),
+            ]
+        )
+        nocaptcha = NoCaptchaField(
+            public_key=settings.RECAPTCHA_SITE_KEY,
+            private_key=settings.RECAPTCHA_SECRET_KEY,
+            secure=True,
+        )
+
+    form = SubmissionForm(request.POST, nocaptcha={'ip_address': '127.0.0.1'})
+
+    submitted = False
+    if request.method == 'POST' and form.validate():
+        excuse_record = Excuse(form.attribution_name, form.excuase)
+        db.add(excuse_record)
+        submitted = True
+
+    return template('submit', form=form, submitted=submitted)
+
 
 
 @route('/acknowledgements/')
