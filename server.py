@@ -161,14 +161,15 @@ def slack_instructions(db):
 
 
 @route('/submit/')
+@post('/submit/')
 def submit(db):
 
     # TODO: break this out along with others in to an excuses package.
     class SubmissionForm(Form):
-        attribution_name = StringField('Your Name (For Attribution purposes)',
+        attribution_name = StringField('Your Name (for future attribution purposes)',
                                        [validators.InputRequired()])
         excuse = TextAreaField(
-            'What\'s YOUR excuse??',
+            'What\'s YOUR excuse !?!?',
             [
                 validators.Length(
                     min=5,
@@ -187,7 +188,8 @@ def submit(db):
 
     submitted = False
     if request.method == 'POST' and form.validate():
-        excuse_record = Excuse(form.attribution_name, form.excuase)
+        excuse_record = Excuse(form.attribution_name.data,
+                               form.excuse.data)
         db.add(excuse_record)
         submitted = True
 

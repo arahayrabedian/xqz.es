@@ -26,11 +26,17 @@ a {
 #header ul li:hover { background: #fefcf2; cursor: pointer; }
 #header ul li:active { background: #fcf4d1; }
 
+/* FORMS FORMS FORMS */
 
-/* Contact Form */
+/* #general */
 .success { color: green; }
 .error { color: red; }
+div.g-recaptcha {
+  margin: 0 auto;
+  width: 304px;
+}
 
+/* Contact Form */
 #contact div { margin-bottom: 30px; }
 #contact label { font-weight: bold; margin-bottom: 10px; display: block; }
 #contact input { width: 100%; padding: 10px; font-size: 18px; }
@@ -46,3 +52,21 @@ a {
 }
 #contact button:hover { cursor: pointer; background: #d61136 }
 #contact .error { margin-top: 2px; }
+
+/* Repeating ourselves here for adding new submission */
+
+#submit div { margin-bottom: 30px; }
+#submit label { font-weight: bold; margin-bottom: 10px; display: block; }
+#submit input { width: 100%; padding: 10px; font-size: 18px; }
+#submit textarea { width: 100%; padding: 10px; font-size: 18px; }
+#submit button {
+	font-size: 22px;
+	font-weight: bold;
+	background: #ED1C43;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 2px;
+}
+#submit button:hover { cursor: pointer; background: #d61136 }
+#submit .error { margin-top: 2px; }

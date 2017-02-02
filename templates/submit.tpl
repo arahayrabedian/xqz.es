@@ -24,7 +24,7 @@
             </div>
 
             <div>
-                <label>{{ !form.excuse.label }}</label>
+                {{ !form.excuse.label }}
                 {{ !form.excuse }}
                 %for error in form.excuse.errors:
                     <p class="error"> {{ error }}</p>
@@ -32,7 +32,7 @@
             </div>
 
             <div>
-                <label>{{ !form.nocaptcha }}</label>
+                {{ !form.nocaptcha }}
                 %for error in form.nocaptcha.errors:
                     <p class="error"> {{ error }}</p>
                 %end
