@@ -91,31 +91,33 @@ def process_slack_command(db):
     # make our lives a little easier
     slack_data = DictObject(request.forms)
 
-    # match help text
-    if slack_data.text == 'help':
-        return {
-            "text": "Request this help text with `/xqzes help`\n"
-                    "Request an excuse (visible to everyone) with `/xqzes`\n"
-                    "Submit a new excuse to a moderator with "
-                    "`/xqzes add <your text here>`\n"
-                    "e.g: `/xqzes add I was shopping!`"
-        }
-    elif slack_data.text.startswith("add"):
-        # here we want to add a new non-approved excuse
-        excuse_text = slack_data.text.lstrip(" add ")
-        if len(excuse_text) > 140:
+    # small chance text is empty (if a stupid dev is curling manually)
+    if 'text' in slack_data.attributes.keys():
+        # match help text
+        if slack_data.text == 'help':
             return {
-                'text': "We conform to twitter standards (for no particular "
-                        "reason), please keep your excuses shorter than "
-                        "140 characters"
+                "text": "Request this help text with `/xqzes help`\n"
+                        "Request an excuse (visible to everyone) with `/xqzes`\n"
+                        "Submit a new excuse to a moderator with "
+                        "`/xqzes add <your text here>`\n"
+                        "e.g: `/xqzes add I was shopping!`"
             }
-        excuse = Excuse(slack_data.user_name, excuse_text)
-        excuse.team_id = slack_data.team_id
-        db.add(excuse)
-        return {
-            'text': "Your excuse has been added to the moderation queue. This "
-                    "can take anywhere from a few minutes to a few years"
-        }
+        elif slack_data.text.startswith("add"):
+            # here we want to add a new non-approved excuse
+            excuse_text = slack_data.text.lstrip(" add ")
+            if len(excuse_text) > 140:
+                return {
+                    'text': "We conform to twitter standards (for no particular "
+                            "reason), please keep your excuses shorter than "
+                            "140 characters"
+                }
+            excuse = Excuse(slack_data.user_name, excuse_text)
+            excuse.team_id = slack_data.team_id
+            db.add(excuse)
+            return {
+                'text': "Your excuse has been added to the moderation queue. This "
+                        "can take anywhere from a few minutes to a few years"
+            }
 
     try:
         excuse_text = Excuse.get_random_excuse(db).excuse
