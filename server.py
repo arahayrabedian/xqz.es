@@ -168,8 +168,19 @@ def submit(db):
 
     # TODO: break this out along with others in to an excuses package.
     class SubmissionForm(Form):
-        attribution_name = StringField('Your Name (for future attribution purposes)',
-                                       [validators.InputRequired()])
+        attribution_name = StringField(
+            'Your Name (for future attribution purposes)',
+            [
+                validators.InputRequired(),
+                validators.Length(
+                    min=3,
+                    max=50,
+                    message="Srsly, give us a decent username "
+                            "(%(min)d - %(max)d chars),"
+                            " doesn't even have to be real."
+                )
+            ]
+        )
         excuse = TextAreaField(
             'What\'s YOUR excuse !?!?',
             [
