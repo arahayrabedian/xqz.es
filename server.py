@@ -92,7 +92,7 @@ def process_slack_command(db):
     slack_data = DictObject(request.forms)
 
     # small chance text is empty (if a stupid dev is curling manually)
-    if 'text' in slack_data.attributes.keys():
+    if 'text' in slack_data.attributes:
         # match help text
         if slack_data.text == 'help':
             return {
