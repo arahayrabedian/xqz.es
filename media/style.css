@@ -22,7 +22,7 @@ a {
 	font-weight: bold;
 	border-radius: 4px;
 }
-#header ul li a { padding: 10px 20px; display: inline-block; }
+#header ul li a { padding: 0px 20px; display: inline-block; }
 #header ul li:hover { background: #fefcf2; cursor: pointer; }
 #header ul li:active { background: #fcf4d1; }
 
