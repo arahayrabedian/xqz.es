@@ -24,7 +24,7 @@
             </div>
 
             <div>
-                <label>{{ !form.contact_text.label }}</label>
+                {{ !form.contact_text.label }}
                 {{ !form.contact_text }}
                 %for error in form.contact_text.errors:
                     <p class="error"> {{ error }}</p>
@@ -32,7 +32,7 @@
             </div>
 
             <div>
-                <label>{{ !form.nocaptcha }}</label>
+                {{ !form.nocaptcha }}
                 %for error in form.nocaptcha.errors:
                     <p class="error"> {{ error }}</p>
                 %end
