@@ -24,6 +24,18 @@ SLACK_OAUTH = {
 RECAPTCHA_SITE_KEY = os.getenv('XQZES_RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY = os.getenv('XQZES_RECAPTCHA_SECRET_KEY')
 
+# list of valid alexa skill application ids
+try:
+    # if we fail to split, the var is either not set (None) or some parsing
+    # problem occured
+    ALEXA_SKILL_APPLICATION_IDS = os.getenv(
+        'ALEXA_SKILL_APPLICATION_IDS', None
+    ).split(',')
+except:
+    print("Could not parse alexa skill application id(s), "
+          "are they set correctly?")
+    ALEXA_SKILL_APPLICATION_IDS = None
+
 # modify template path for production
 STATIC_PATH = os.getenv('XQZES_BOTTLE_STATIC_PATH', './media/')
 TEMPLATE_PATH = os.getenv('XQZES_BOTTLE_TEMPLATE_PATH', './templates/')

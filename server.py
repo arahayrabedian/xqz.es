@@ -30,6 +30,7 @@ from wtfnocaptcha.fields import NoCaptchaField
 import settings
 
 from decorators.slack_request_processor import slack_verification_preprocessor
+from decorators.alexa_request_validator import alexa_request_validator
 from contact.views import contact
 from oauth2.views import callback
 from util import DictObject
@@ -127,6 +128,25 @@ def process_slack_command(db):
         "response_type": "in_channel",
         "text": excuse_text,
     }
+
+
+@post('/alexa-excuse')
+@alexa_request_validator
+def alexa_excuse(db):
+    try:
+        excuse_text = Excuse.get_random_excuse(db).excuse
+        return {
+            "version": "0.1",
+            "response": {
+                "outputSpeech": {
+                    "type": "PlainText",
+                    "text": excuse_text,
+                },
+                "shouldEndSession": True,
+            }
+        }
+    except AttributeError:
+        abort(500, "We have failed")
 
 
 @route('/')
