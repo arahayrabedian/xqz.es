@@ -27,7 +27,7 @@ from decorators.slack_request_processor import slack_verification_preprocessor
 from oauth2.views import callback
 from util import DictObject
 
-route('/oauth2/callback/', 'GET', callback)
+route("/oauth2/callback/", "GET", callback)
 
 # set up sqlalchemy
 AlchemyBase = declarative_base()
@@ -37,12 +37,12 @@ create_session = sessionmaker(bind=engine)
 
 # set up the sqlalchemy plugin
 sqlalchemy_plugin = sqlalchemy.Plugin(
-        engine,
-        AlchemyBase.metadata,
-        keyword='db',
-        create=True,
-        commit=True,
-        use_kwargs=False
+    engine,
+    AlchemyBase.metadata,
+    keyword="db",
+    create=True,
+    commit=True,
+    use_kwargs=False,
 )
 
 # set up the bottle app
@@ -67,14 +67,12 @@ class Excuse(AlchemyBase):
 
     @classmethod
     def get_random_excuse(cls, db):
-        return db.query(cls).filter(
-            cls.published==True
-        ).order_by(
-            func.random()
-        ).first()
+        return (
+            db.query(cls).filter(cls.published == True).order_by(func.random()).first()
+        )
 
 
-@post('/slacktion/')
+@post("/slacktion/")
 @slack_verification_preprocessor
 def process_slack_command(db):
     """Parse /commands and route them to their appropriate processing methods
@@ -84,31 +82,31 @@ def process_slack_command(db):
     slack_data = DictObject(request.forms)
 
     # small chance text is empty (if a stupid dev is curling manually)
-    if 'text' in slack_data.attributes:
+    if "text" in slack_data.attributes:
         # match help text
-        if slack_data.text == 'help':
+        if slack_data.text == "help":
             return {
                 "text": "Request this help text with `/xqzes help`\n"
-                        "Request an excuse (visible to everyone) with `/xqzes`\n"
-                        "Submit a new excuse to a moderator with "
-                        "`/xqzes add <your text here>`\n"
-                        "e.g: `/xqzes add I was shopping!`"
+                "Request an excuse (visible to everyone) with `/xqzes`\n"
+                "Submit a new excuse to a moderator with "
+                "`/xqzes add <your text here>`\n"
+                "e.g: `/xqzes add I was shopping!`"
             }
         elif slack_data.text.startswith("add"):
             # here we want to add a new non-approved excuse
             excuse_text = slack_data.text.lstrip(" add ")
             if len(excuse_text) > 140:
                 return {
-                    'text': "We conform to twitter standards (for no particular "
-                            "reason), please keep your excuses shorter than "
-                            "140 characters"
+                    "text": "We conform to twitter standards (for no particular "
+                    "reason), please keep your excuses shorter than "
+                    "140 characters"
                 }
             excuse = Excuse(slack_data.user_name, excuse_text)
             excuse.team_id = slack_data.team_id
             db.add(excuse)
             return {
-                'text': "Your excuse has been added to the moderation queue. This "
-                        "can take anywhere from a few minutes to a few years"
+                "text": "Your excuse has been added to the moderation queue. This "
+                "can take anywhere from a few minutes to a few years"
             }
 
     try:
@@ -121,7 +119,7 @@ def process_slack_command(db):
     }
 
 
-@route('/')
+@route("/")
 def hello(db):
     """Serve up a plaintext public excuse for the purposes of
     """
@@ -131,48 +129,48 @@ def hello(db):
         abort(404, "NO EXCUSE FOR YOU, but, maybe we need one :(")
 
     return template(
-        'home',
+        "home",
         excuse_text=excuse_text,
-        slack_client_id=settings.SLACK_OAUTH['client_id'],
-        slack_command_scope=settings.SLACK_OAUTH['command_scope'],
-        slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
+        slack_client_id=settings.SLACK_OAUTH["client_id"],
+        slack_command_scope=settings.SLACK_OAUTH["command_scope"],
+        slack_installed=strtobool(request.GET.get("added_to_slack", "false")),
     )
 
 
-@route('/privacy/')
+@route("/privacy/")
 def privacy_policy(db):
-    return static_file('privacy_policy.txt', root=settings.TEMPLATE_PATH)
+    return static_file("privacy_policy.txt", root=settings.TEMPLATE_PATH)
 
 
-@route('/slack_instructions/')
+@route("/slack_instructions/")
 def slack_instructions(db):
     return template(
-        'slack_instructions',
-        slack_client_id=settings.SLACK_OAUTH['client_id'],
-        slack_command_scope=settings.SLACK_OAUTH['command_scope'],
-        slack_installed=strtobool(request.GET.get('added_to_slack', 'false')),
+        "slack_instructions",
+        slack_client_id=settings.SLACK_OAUTH["client_id"],
+        slack_command_scope=settings.SLACK_OAUTH["command_scope"],
+        slack_installed=strtobool(request.GET.get("added_to_slack", "false")),
     )
 
 
-@route('/submit/')
+@route("/submit/")
 def submit(db):
-    return template('submit')
+    return template("submit")
 
 
-@route('/contact/')
+@route("/contact/")
 def contact(db):
-    return template('contact')
+    return template("contact")
 
 
-@route('/acknowledgements/')
+@route("/acknowledgements/")
 def privacy_policy(db):
-    return template('acknowledgements')
+    return template("acknowledgements")
 
 
-@route('/static/<path:path>')
+@route("/static/<path:path>")
 def callback(path):
     return static_file(path, root=settings.STATIC_PATH)
 
 
-if __name__ == '__main__':
-    run(host='127.0.0.1', port=8088, debug=False)
+if __name__ == "__main__":
+    run(host="127.0.0.1", port=8088, debug=False)
