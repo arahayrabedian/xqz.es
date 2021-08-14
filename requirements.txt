@@ -7,4 +7,4 @@ git+https://github.com/arahayrabedian/wtforms-nocaptcha#egg=wtforms-nocaptcha
 git+https://github.com/arahayrabedian/gmail-sender#egg=gmail-sender
 
 # where your own discretion is required:
-psycopg2==2.6.2  # your mileage may vary, need this for implementing pg backing store
+psycopg2==2.9.1  # your mileage may vary, need this for implementing pg backing store

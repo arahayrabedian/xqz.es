@@ -163,50 +163,8 @@ def slack_instructions(db):
 
 
 @route('/submit/')
-@post('/submit/')
 def submit(db):
-
-    # TODO: break this out along with others in to an excuses package.
-    class SubmissionForm(Form):
-        attribution_name = StringField(
-            'Your Name (for future attribution purposes)',
-            [
-                validators.InputRequired(),
-                validators.Length(
-                    min=3,
-                    max=50,
-                    message="Srsly, give us a decent username "
-                            "(%(min)d - %(max)d chars),"
-                            " doesn't even have to be real."
-                )
-            ]
-        )
-        excuse = TextAreaField(
-            'What\'s YOUR excuse !?!?',
-            [
-                validators.Length(
-                    min=5,
-                    max=140,
-                    message="Please provide %(min)d - %(max)d "
-                            "characters"),
-            ]
-        )
-        nocaptcha = NoCaptchaField(
-            public_key=settings.RECAPTCHA_SITE_KEY,
-            private_key=settings.RECAPTCHA_SECRET_KEY,
-            secure=True,
-        )
-
-    form = SubmissionForm(request.POST, nocaptcha={'ip_address': '127.0.0.1'})
-
-    submitted = False
-    if request.method == 'POST' and form.validate():
-        excuse_record = Excuse(form.attribution_name.data,
-                               form.excuse.data)
-        db.add(excuse_record)
-        submitted = True
-
-    return template('submit', form=form, submitted=submitted)
+    return template('submit')
 
 
 
