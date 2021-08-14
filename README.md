@@ -39,13 +39,9 @@ environment variables. These are explained below:
 |`XQZES_DATABASE_CONNECTION_STRING`|`sqlite:///excuses.sqlite`|local sqlite file called `excuses.sqlite`|SQLAlchemy connection url, see SQLAlchemy documentation [here](http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls)|
 |`XQZES_BOTTLE_STATIC_PATH`|`./media`|Absolute path on system to your static/media files. I.e: full path to the `media` folder at this project's root.'|
 |`XQZES_BOTTLE_TEMPLATE_PATH`|`./templates`|Absolute path on system to the `templates` folder.|
-|`XQZES_ADMIN_EMAIL`|None|Gmail address used to send and receive application generated emails as well as the contact email|
-|`XQZES_ADMIN_EMAIL_PASSWORD`|None|Password for that address (Use Gmail app-specific passwords)|
 |`SLACK_VERIFICATION_TOKEN`|None|The token provided by slack that allows us to verify that it is indeed your Slack app making an API request.[1]|
 |`XQZES_SLACK_OAUTH_CLIENT_ID`|None|Your applications OAuth client id, used for the Add to Slack button as well as the OAuth process.|
 |`XQZES_SLACK_OAUTH_CLIENT_SECRET`|None|Your applications OAuth client secret, used for the OAuth process.|
-|`XQZES_RECAPTCHA_SITE_KEY`|None|Site key to access google's Recaptcha API, used currently to protect the Contact Us form. Can be obtained [here](https://www.google.com/recaptcha/). Also see[2]|
-|`XQZES_RECAPTCHA_SECRET_KEY`|None|Site key to access google's Recaptcha API, used currently to protect the Contact Us form. Obtained with Site key. Also see [2]|
 
 ### Initialization (one-time)
 Once you have gathered all your environment variables and set up

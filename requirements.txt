@@ -2,9 +2,6 @@
 bottle==0.12.9
 bottle-sqlalchemy==0.4.3
 requests-oauthlib==0.6.2
-WTForms==2.1
-git+https://github.com/arahayrabedian/wtforms-nocaptcha#egg=wtforms-nocaptcha
-git+https://github.com/arahayrabedian/gmail-sender#egg=gmail-sender
 
 # where your own discretion is required:
 psycopg2==2.9.1  # your mileage may vary, need this for implementing pg backing store

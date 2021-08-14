@@ -21,12 +21,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
-from wtforms import Form
-from wtforms import validators
-from wtforms.fields import StringField
-from wtforms.fields import TextAreaField
-from wtfnocaptcha.fields import NoCaptchaField
-
 import settings
 
 from decorators.slack_request_processor import slack_verification_preprocessor

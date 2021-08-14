@@ -6,10 +6,6 @@ from bottle import TEMPLATE_PATH as BOTTLE_TEMPLATE_PATH
 DATABASE_CONNECTION_STRING = os.getenv("XQZES_DATABASE_CONNECTION_STRING",
                                        "sqlite:///excuses.sqlite")
 
-# Email sending credentials
-ADMIN_EMAIL = os.getenv('XQZES_ADMIN_EMAIL')
-ADMIN_EMAIL_PASSWORD = os.getenv('XQZES_ADMIN_EMAIL_PASSWORD')
-
 
 # private token on slack to validate that it's slack making the request
 SLACK_VERIFICATION_TOKEN = os.getenv('XQZES_SLACK_VERIFICATION_TOKEN')
@@ -20,9 +16,6 @@ SLACK_OAUTH = {
     'command_scope': 'commands',
 }
 
-# nocaptcha credentials
-RECAPTCHA_SITE_KEY = os.getenv('XQZES_RECAPTCHA_SITE_KEY')
-RECAPTCHA_SECRET_KEY = os.getenv('XQZES_RECAPTCHA_SECRET_KEY')
 
 # modify template path for production
 STATIC_PATH = os.getenv('XQZES_BOTTLE_STATIC_PATH', './media/')
