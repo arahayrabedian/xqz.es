@@ -43,6 +43,11 @@ environment variables. These are explained below:
 |`XQZES_SLACK_OAUTH_CLIENT_ID`|None|Your applications OAuth client id, used for the Add to Slack button as well as the OAuth process.|
 |`XQZES_SLACK_OAUTH_CLIENT_SECRET`|None|Your applications OAuth client secret, used for the OAuth process.|
 
+#### Note
+
+There are a few small tweaks I've made that don't necessarily generalize,
+these can be found on the `deploy` branch mostly.
+
 ### Initialization (one-time)
 Once you have gathered all your environment variables and set up
 your system
