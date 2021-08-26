@@ -1,4 +1,3 @@
-
 class DictObject(object):
     """
     Reduce boilerplate dict extraction in the code by moving dicts in to
@@ -8,6 +7,7 @@ class DictObject(object):
     slack = DictObject(request.forms)
     slack.text
     """
+
     def __init__(self, attributes):
         self.attributes = attributes
 

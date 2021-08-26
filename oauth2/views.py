@@ -25,17 +25,18 @@ def callback():
     X_FORWARDED_HOST, X_FORWARDED_PROTO so that bottle can render the correct
     url and links for you.
     """
-    oauth2session = OAuth2Session(settings.SLACK_OAUTH['client_id'],
-                                  state=request.GET['state'])
+    oauth2session = OAuth2Session(
+        settings.SLACK_OAUTH["client_id"], state=request.GET["state"]
+    )
 
-    #PII - update privacy policy if oauth2 token is stored.
+    # PII - update privacy policy if oauth2 token is stored.
     token = oauth2session.fetch_token(
-        settings.SLACK_OAUTH['token_url'],
-        client_secret=settings.SLACK_OAUTH['client_secret'],
-        authorization_response=request.url
+        settings.SLACK_OAUTH["token_url"],
+        client_secret=settings.SLACK_OAUTH["client_secret"],
+        authorization_response=request.url,
     )
 
     # we don't need the token, we just need the user to have installed the app
     # in the future, if we need tokens, we'll get them.
 
-    redirect('/?added_to_slack=true')
+    redirect("/?added_to_slack=true")

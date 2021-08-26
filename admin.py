@@ -11,7 +11,7 @@ def load_excuses():
     """load, specifically and only, the excuses fixtures. all hard coded.
     i'm not ashamed"""
     db_session = create_session()
-    with open("fixtures/excuses.txt", 'r') as file:
+    with open("fixtures/excuses.txt", "r") as file:
         for line in file:
             excuse = Excuse("admin", line.rstrip("\n"))
             excuse.published = True
