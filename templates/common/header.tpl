@@ -11,5 +11,6 @@
 	<ul>
 		<li><a href="/acknowledgements/">Acknowledgements</a></li>
 		<li><a href="/privacy/">Privacy</a></li>
+		<li><a href="https://www.buymeacoffee.com/avh02">Buy me a coffee</a></li>
 	</ul>
 </div>
