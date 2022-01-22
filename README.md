@@ -6,11 +6,14 @@ slack to randomly insert excuses in to their chats.
 It selects an excuse randomly from a backing database.
 As a side-feature, it can present the same excuses in HTML.
 
+Slack support was retired when when slack required API
+changes and procedural hoops that I did not feel
+like going through.
+
 ## Usage
 If you have a particular reason to host xqz.es yourself, you
 are more than welcome to do so, by default, you can visit
-[xqz.es](https://xqz.es/) in order to get excuses on the web
-and to add to slack via the 'add to slack' button there.
+[xqz.es](https://xqz.es/) in order to get excuses on the web.
 
 ## Contributing
 Contributions are welcome as PR's, there is currently
@@ -39,9 +42,6 @@ environment variables. These are explained below:
 |`XQZES_DATABASE_CONNECTION_STRING`|`sqlite:///excuses.sqlite`|local sqlite file called `excuses.sqlite`|SQLAlchemy connection url, see SQLAlchemy documentation [here](http://docs.sqlalchemy.org/en/latest/core/engines.html#database-urls)|
 |`XQZES_BOTTLE_STATIC_PATH`|`./media`|Absolute path on system to your static/media files. I.e: full path to the `media` folder at this project's root.'|
 |`XQZES_BOTTLE_TEMPLATE_PATH`|`./templates`|Absolute path on system to the `templates` folder.|
-|`SLACK_VERIFICATION_TOKEN`|None|The token provided by slack that allows us to verify that it is indeed your Slack app making an API request.[1]|
-|`XQZES_SLACK_OAUTH_CLIENT_ID`|None|Your applications OAuth client id, used for the Add to Slack button as well as the OAuth process.|
-|`XQZES_SLACK_OAUTH_CLIENT_SECRET`|None|Your applications OAuth client secret, used for the OAuth process.|
 
 #### Note
 
@@ -68,10 +68,5 @@ it should be as simple as `./server.py`.
 
 
 # Footnotes
-[1] - Slack sends this key with every API request they make in order for us to
- be able to verify that Slack is the sender of the request. Otherwise
- Anybody could make API calls to your API and trigger commands on behalf of
- other teams. Dangerous.
-
-[2] - You may enter dummy data for development purposes, however, the
+[1] - You may enter dummy data for development purposes, however, the
 Contact Us page will fail to render a Captcha and will not be submittable.
